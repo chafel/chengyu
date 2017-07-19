@@ -1,0 +1,17 @@
+/node_modules
+/dist
+.tmp
+*.mo
+*.pyc
+.sass-cache
+.DS_Store
+dump.rdb
+/docs
+gringotts
+/app/tutorials/*
+/app/fonts/bearychat_iconfont*.*
+/app/fonts/bearyfont*.*
+/app/styles/iconfont.less
+/app/assets/*
+/app/lang
+/i18n/locales/en/*.json

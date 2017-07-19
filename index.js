@@ -1,10 +1,38 @@
-var http = require('http');
-var url = require('url');
-
 var port = Number(process.argv[2]);
 var apikey = process.argv[3];
-// target data url: 精神
+// target data url:
 var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
+
+﻿var express = require("express");
+var app = express();
+var path =require('path');
+var bodyparser = require('body-parser')
+app.use(bodyparser.urlencoded({extended: false}));
+
+var fakeMessage = {
+  "text" : "text, this field may accept markdown",
+  "attachments" : [
+    {
+      "title" : "title_1",
+      "text" : "attachment_text",
+      "color" : "#666666",
+      "images" : [
+        {
+          "url" : "https://lh4.googleusercontent.com/-hdQ2HH5-hog/AAAAAAAAAAI/AAAAAAAAAAA/GW2OyU89jXE/W96-H96/photo.jpg"
+        },
+        {
+          "url" : "https://lh4.googleusercontent.com/-hdQ2HH5-hog/AAAAAAAAAAI/AAAAAAAAAAA/GW2OyU89jXE/W96-H96/photo.jpg"
+        }
+      ]
+    }
+  ]
+};
+
+app.post('/chengyu', function(req, res) {
+  console.log(req);
+  res.end(JSON.stringify(fakeMessage));
+})
+app.listen(Number(process.argv[2]));
 
 // req data format:
 // {
@@ -41,25 +69,3 @@ Response:
   }
 ]
 }*/
-
-var server = http.createServer(function (req, res) {
-  console.log(req)
-  var parsedUrl = url.parse(req.url, true)
-  var time = new Date(parsedUrl.query.iso)
-  var result
-
-  // if (/^\/api\/parsetime/.test(req.url)) {
-  //   result = parsetime(time)
-  // } else if (/^\/api\/unixtime/.test(req.url)) {
-  //   result = unixtime(time)
-  // }
-
-  if (result) {
-    res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(JSON.stringify(result))
-  } else {
-    res.writeHead(404)
-    res.end()
-  }
-})
-server.listen(port)

@@ -10,16 +10,13 @@ var bodyparser = require('body-parser')
 app.use(bodyparser.urlencoded({extended: false}));
 
 var fakeMessage = {
-  "text" : "text, this field may accept markdown",
+  "text" : "##~~text, this field may accept markdown~~",
   "attachments" : [
     {
-      "title" : "title_1",
-      "text" : "attachment_text",
+      "title" : "Ask:",
+      "text" : "Who am I?",
       "color" : "#666666",
       "images" : [
-        {
-          "url" : "https://lh4.googleusercontent.com/-hdQ2HH5-hog/AAAAAAAAAAI/AAAAAAAAAAA/GW2OyU89jXE/W96-H96/photo.jpg"
-        },
         {
           "url" : "https://lh4.googleusercontent.com/-hdQ2HH5-hog/AAAAAAAAAAI/AAAAAAAAAAA/GW2OyU89jXE/W96-H96/photo.jpg"
         }
@@ -29,7 +26,7 @@ var fakeMessage = {
 };
 
 app.post('/chengyu', function(req, res) {
-  console.log(req);
+  console.log(req.body);
   res.end(JSON.stringify(fakeMessage));
 })
 app.listen(Number(process.argv[2]));

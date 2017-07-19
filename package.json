@@ -1,0 +1,15 @@
+{
+  "name": "chengyu",
+  "version": "0.0.0",
+  "description": "An Chinese Cheng-Yu APP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chengyu",
+    "成语"
+  ],
+  "author": "chaofeis@gmail.com",
+  "license": "ISC"
+}

@@ -6,7 +6,8 @@ var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWor
 ﻿var express = require("express");
 var app = express();
 var path =require('path');
-var bodyparser = require('body-parser')
+var bodyparser = require('body-parser');
+app.use( bodyparser.json() );
 app.use(bodyparser.urlencoded({extended: false}));
 
 var fakeMessage = {

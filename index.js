@@ -1,14 +1,17 @@
-var port = Number(process.argv[2]);
-var apikey = process.argv[3];
-// target data url:
-var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
-
-﻿var express = require("express");
+﻿﻿var express = require("express");
 var app = express();
 var path =require('path');
 var bodyparser = require('body-parser');
 app.use( bodyparser.json() );
 app.use(bodyparser.urlencoded({extended: false}));
+
+var request = require('./requestData');
+
+var port = Number(process.argv[2]);
+var apikey = process.argv[3];
+// target data url:
+// var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
+
 
 var fakeMessage = {
   "text" : "##~~text, this field may accept markdown~~",
@@ -26,11 +29,21 @@ var fakeMessage = {
   ]
 };
 
+// TODO: save log
 app.post('/chengyu', function(req, res) {
-  console.log(req.body);
-  res.end(JSON.stringify(fakeMessage));
+  const { token, text, trigger_word, user_name } = req.body;
+  if (token !== '8d37093bb3548d9be7d876147d288337') {
+    res.status(404)        // HTTP status 404: NotFound
+      .end('Not found');
+  }
+  var word = text.split(' ').slice(1).join('');
+  var result = '';
+  request(apikey, word, function(data) {
+    result = data;
+  });
+  res.end(JSON.stringify(data));
 })
-app.listen(Number(process.argv[2]));
+app.listen(port);
 
 // req data format:
 // {

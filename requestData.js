@@ -1,11 +1,11 @@
 var http = require('http');
-const { Url } = require('url');
+const url = require('url');
 //var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
 
 function request(key, word, cb) {
-  const url = new Url(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`);
-  console.log(url);
-  http.get(url, (res) => {
+  const dataUrl = url.parse(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`);
+  console.log(dataUrl);
+  http.get(dataUrl, (res) => {
     console.log(res);
     const { statusCode } = res;
     const contentType = res.headers['content-type'];

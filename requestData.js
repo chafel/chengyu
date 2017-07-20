@@ -4,7 +4,7 @@ var request = require('request');
 //var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
 
 function request(key, word, cb) {
-  // const dataUrl = url.parse(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`);
+  const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
 
 // Set the headers
   var headers = {
@@ -13,20 +13,21 @@ function request(key, word, cb) {
   }
 
 // Configure the request
-  var options = {
-    url: `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`,
-    method: 'POST',
-    headers: headers,
-  }
+  // var options = {
+  //   url: `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`,
+  //   method: 'GET',
+  //   headers: headers,
+  // }
 
 // Start the request
-  request(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      // Print out the response body
-      console.log(body);
-      cb(body);
-    }
-  })
+  request.get(dataUrl)
+    .on('response', function (response) {
+      console.log(response.statusCode) // 200
+      console.log(response);
+    })
+    .on('error', function(err) {
+      console.log(err)
+    })
 
   // console.log(dataUrl);
   // http.get(dataUrl, (res) => {

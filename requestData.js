@@ -28,4 +28,4 @@ function request(key, word, callback) {
   req.end();
 }
 
-module.export = request;
+module.exports = request;

@@ -39,7 +39,7 @@ app.post('/chengyu', function(req, res) {
   var word = text.split(' ').slice(1).join('');
   console.log(word);
   request(apikey, word, function(data) {
-    console.log(data);
+    console.log(JSON.stringify(data), data);
     res.end(JSON.stringify(data));
   });
 })

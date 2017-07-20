@@ -1,7 +1,7 @@
 var http = require('http');
 //var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
 
-function request(key, word, callback) {
+function request(key, word, cb) {
   var options = {
     host: 'http://api.avatardata.cn',
     path: `/ChengYu/Search?key=${key}&keyWord=${word}`,
@@ -9,14 +9,14 @@ function request(key, word, callback) {
     method: 'GET'
   };
 
-  callback = function(response) {
+  var callback = function(response) {
     var str = ''
     response.on('data', function (chunk) {
       str += chunk;
     });
 
     response.on('end', function () {
-      callback(str);
+      cb(str);
     });
   }
 

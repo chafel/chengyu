@@ -9,13 +9,18 @@ function request(key, word, cb) {
     method: 'GET'
   };
 
-  var callback = function(response) {
+  var callback = function(err, response) {
+    if (err) {
+      throw err;
+    }
+
     var str = ''
     response.on('data', function (chunk) {
       str += chunk;
     });
 
     response.on('end', function () {
+      console.log(str);
       cb(str);
     });
   }

@@ -2,7 +2,10 @@ var http = require('http');
 //var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
 
 function request(key, word, cb) {
-  http.get(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`, (res) => {
+  const url = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
+  console.log(url);
+  http.get(url, (res) => {
+    console.log(res);
     const { statusCode } = res;
     const contentType = res.headers['content-type'];
 

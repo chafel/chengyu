@@ -37,11 +37,10 @@ app.post('/chengyu', function(req, res) {
       .end('Not found');
   }
   var word = text.split(' ').slice(1).join('');
-  var result = '';
+  console.log(word);
   request(apikey, word, function(data) {
-    result = data;
-    console.log(result);
-    res.end(JSON.stringify(result));
+    console.log(data);
+    res.end(JSON.stringify(data));
   });
 })
 app.listen(port);

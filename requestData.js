@@ -2,35 +2,39 @@ var http = require('http');
 //var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
 
 function request(key, word, cb) {
-  var options = {
-    host: 'http://api.avatardata.cn',
-    path: `/ChengYu/Search?key=${key}&keyWord=${word}`,
-    port: '80',
-    method: 'GET'
-  };
+  http.get(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`, (res) => {
+    const { statusCode } = res;
+    const contentType = res.headers['content-type'];
 
-  var callback = function(err, response) {
-    if (err) {
-      throw err;
+    let error;
+    if (statusCode !== 200) {
+      error = new Error('Request Failed.\n' +
+        `Status Code: ${statusCode}`);
+    } else if (!/^application\/json/.test(contentType)) {
+      error = new Error('Invalid content-type.\n' +
+        `Expected application/json but received ${contentType}`);
     }
-
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
+    if (error) {
+      console.error(error.message);
+      // consume response data to free up memory
+      res.resume();
+      return;
+    }
+    res.setEncoding('utf8');
+    let rawData = '';
+    res.on('data', (chunk) => { rawData += chunk; });
+    res.on('end', () => {
+      try {
+        const parsedData = JSON.parse(rawData);
+        console.log(parsedData);
+        cb(parsedData);
+      } catch (e) {
+        console.error(e.message);
+      }
     });
-
-    response.on('end', function () {
-      console.log(str);
-      cb(str);
-    });
-  }
-
-  var req = http.request(options, callback);
-  //This is the data we are posting, it needs to be a string or a buffer
-  // req.write(JSON.stringify({
-  //
-  // }));
-  req.end();
+  }).on('error', (e) => {
+      console.error(`Got error: ${e.message}`);
+  });
 }
 
 module.exports = request;

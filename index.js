@@ -41,7 +41,7 @@ app.post('/chengyu', function(req, res) {
   request(apikey, word, function(data) {
     result = data;
   });
-  res.end(JSON.stringify(data));
+  res.end(JSON.stringify(result));
 })
 app.listen(port);
 

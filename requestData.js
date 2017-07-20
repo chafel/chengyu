@@ -1,8 +1,9 @@
 var http = require('http');
+const { Url } = require('url');
 //var dataQueryUrl = `http://api.avatardata.cn/ChengYu/Search?key=${apikey}&keyWord=`;
 
 function request(key, word, cb) {
-  const url = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
+  const url = new Url(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`);
   console.log(url);
   http.get(url, (res) => {
     console.log(res);

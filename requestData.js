@@ -11,7 +11,7 @@ module.exports = function (key, word, cb) {
       console.log(response.headers['from']);
 
       let error;
-      if (statusCode !== 200) {
+      if (response.statusCode !== 200) {
         error = new Error('Request Failed.\n' + `Status Code: ${statusCode}`);
       }
       if (error) {

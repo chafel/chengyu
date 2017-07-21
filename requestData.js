@@ -1,9 +1,9 @@
 var request = require('request');
 
 module.exports = function (key, word, cb) {
-  const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
+  // const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
 
-  request.get(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`)
+  request.get('http://api.avatardata.cn/ChengYu/Search?key=' + key + '&keyWord=' + word)
     .on('response', function (response) {
       console.log(response.statusCode);
       console.log(response);

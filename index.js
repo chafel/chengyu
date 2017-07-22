@@ -39,6 +39,7 @@ app.post('/chengyu', function(req, res) {
   if (words.length > 2) {
     fakeMessage.text = '请使用正确的格式：!chengyu+任意个数的汉字';
     res.end(JSON.stringify(fakeMessage));
+    return;
   } else {
     word = words.slice(1).join('');
     console.log(word);
@@ -46,6 +47,7 @@ app.post('/chengyu', function(req, res) {
     if (!findedChineseWord) {
       fakeMessage.text = '请使用正确的格式：`!chengyu+任意个数的汉字`';
       res.end(JSON.stringify(fakeMessage));
+      return;
     }
   }
 
@@ -59,6 +61,11 @@ app.post('/chengyu', function(req, res) {
     if (error_code !== 0) {
       fakeMessage.text = reason;
     } else {
+      if (total === 0) {
+        fakeMessage.text = '这=͟͟͞͞不=͟͟͞͞是=͟͟͞͞个=͟͟͞͞成=͟͟͞͞语=͟͟͞͞吧=͟͟͞͞，我=͟͟͞͞也=͟͟͞͞找=͟͟͞͞不=͟͟͞͞到=͟͟͞͞，sorry';
+        res.end(JSON.stringify(fakeMessage));
+        return;
+      }
       fakeMessage.text = result.reduce(function(string, v, i) {
         return string += `${i+1}. ${v.name}\n`;
       }, '搜索结果：\n');

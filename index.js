@@ -10,6 +10,7 @@ logToFile(__dirname + '/debug.log');
 
 var request = require('./requestData');
 var isChineseWord = require('./utils/isChineseWord');
+var randomPick = require('./utils/randomPick');
 
 var port = Number(process.argv[2]);
 var apikey = process.argv[3];
@@ -69,7 +70,7 @@ app.post('/chengyu', function(req, res) {
         res.end(JSON.stringify(fakeMessage));
         return;
       }
-      fakeMessage.text = result.reduce(function(string, v, i) {
+      fakeMessage.text = randomPick(result, 20).reduce(function(string, v, i) {
         return string += `${i+1}. ${v.name}\n`;
       }, '搜索结果：\n');
     }

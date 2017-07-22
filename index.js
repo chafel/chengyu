@@ -5,6 +5,13 @@ var bodyparser = require('body-parser');
 app.use( bodyparser.json() );
 app.use(bodyparser.urlencoded({extended: false}));
 
+var winston = require('winston');
+winston.configure({
+  transports: [
+    new (winston.transports.File)({ filename: 'my.log' })
+  ]
+});
+
 var request = require('./requestData');
 var isChineseWord = require('./utils/isChineseWord');
 
@@ -42,7 +49,7 @@ app.post('/chengyu', function(req, res) {
     return;
   } else {
     word = words.slice(1).join('');
-    console.log(word);
+    winston.log(word);
     var findedChineseWord = word.split('').find(isChineseWord);
     if (!findedChineseWord) {
       fakeMessage.text = '请使用正确的格式：`!chengyu+任意个数的汉字`';
@@ -57,7 +64,7 @@ app.post('/chengyu', function(req, res) {
     const {
       total, result, error_code, reason
     } = JSON.parse(data);
-    console.log(total, error_code, reason);
+    winston.log(total, error_code, reason);
     if (error_code !== 0) {
       fakeMessage.text = reason;
     } else {

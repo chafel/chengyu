@@ -1,4 +1,5 @@
 var request = require('request');
+var winston = require('winston');
 
 module.exports = function (key, word, cb) {
   const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
@@ -12,6 +13,7 @@ module.exports = function (key, word, cb) {
   }, function(error, response, body) {
     if (error) {
       console.error(error.message);
+      winston.log(error.message);
       // consume response data to free up memory
       response.resume();
       return;

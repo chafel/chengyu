@@ -44,8 +44,8 @@ app.post('/chengyu', function(req, res) {
       fakeMessage.text = reason;
     } else {
       fakeMessage.text = result.reduce(function(string, v, i) {
-        return string += v.name;
-      }, '');
+        return string += `${i+1}. ${v.name}\n`;
+      }, '搜索结果：\n');
     }
     res.end(JSON.stringify(fakeMessage));
   });

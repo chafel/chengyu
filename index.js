@@ -5,15 +5,9 @@ var bodyparser = require('body-parser');
 app.use( bodyparser.json() );
 app.use(bodyparser.urlencoded({extended: false}));
 
-var fs = require('fs');
-var util = require('util');
-var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
-var log_stdout = process.stdout;
+var logToFile = require('./utils/logToFlie');
+logToFile(__dirname + '/debug.log');
 
-console.log = function(d) { //
-  log_file.write(new Date() + ' :\n' + util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
-};
 
 var request = require('./requestData');
 var isChineseWord = require('./utils/isChineseWord');

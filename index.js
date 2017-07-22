@@ -6,6 +6,7 @@ app.use( bodyparser.json() );
 app.use(bodyparser.urlencoded({extended: false}));
 
 var request = require('./requestData');
+var isChineseWord = require('./utils/isChineseWord');
 
 var port = Number(process.argv[2]);
 var apikey = process.argv[3];
@@ -33,8 +34,22 @@ app.post('/chengyu', function(req, res) {
     res.status(404)        // HTTP status 404: NotFound
       .end('Not found');
   }
-  var word = text.split(' ').slice(1).join('');
+  var words = text.split(' ');
+  var word;
+  if (words.length > 2) {
+    fakeMessage.text = '请使用正确的格式：!chengyu+任意个数的汉字';
+    res.end(JSON.stringify(fakeMessage));
+  } else {
+    word = words.slice(1);
+    var hasNonChineseWord = word.split('').find(!isChineseWord);
+    if (hasNonChineseWord) {
+      fakeMessage.text = '请使用正确的格式：`!chengyu+任意个数的汉字`';
+      res.end(JSON.stringify(fakeMessage));
+    }
+  }
+
   console.log(word);
+
   request(apikey, word, function(data) {
     const {
       total, result, error_code, reason

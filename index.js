@@ -42,7 +42,7 @@ app.post('/chengyu', function(req, res) {
     if (error_code !== 0) {
       fakeMessage.text = reason;
     } else {
-      fakeMessage.text = result.reduce(funtion(string, v, i) {
+      fakeMessage.text = result.reduce(function(string, v, i) {
         return string += v.name;
       }, '');
     }

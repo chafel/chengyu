@@ -10,7 +10,6 @@ module.exports = function(dirname) {
     var data = new Date() + ' :\n' + util.format.apply(null, arguments) + '\n';
     fs.appendFile(dirname, data, function (err) {
       if (err) throw err;
-      console.log('Saved to log!');
     });
 
     log_stdout.write(util.format.apply(null, arguments) + '\n');

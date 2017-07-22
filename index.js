@@ -70,7 +70,8 @@ app.post('/chengyu', function(req, res) {
         res.end(JSON.stringify(fakeMessage));
         return;
       }
-      fakeMessage.text = randomPick(result, 20).reduce(function(string, v, i) {
+      // NOTE: total 是总数，但每次最多只返回20个
+      fakeMessage.text = randomPick(result, 5).reduce(function(string, v, i) {
         return string += `${i+1}. ${v.name}\n`;
       }, '搜索结果：\n');
     }

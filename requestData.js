@@ -8,15 +8,15 @@ module.exports = function (key, word, cb) {
     form: {
       key,
       keyWord: word
-    }},
-  function(error, response, body) {
+    }
+  }, function(error, response, body) {
     if (error) {
       console.error(error.message);
       // consume response data to free up memory
       response.resume();
       return;
     }
-    console.log(body);
+    cb(body);
   })
     // .on('response', function (response) {
     //   console.log(response.statusCode);

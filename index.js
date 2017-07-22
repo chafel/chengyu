@@ -12,18 +12,18 @@ var apikey = process.argv[3];
 
 var fakeMessage = {
   "text" : "##~~text, this field may accept markdown~~",
-  "attachments" : [
-    {
-      "title" : "Ask:",
-      "text" : "Who am I?",
-      "color" : "#666666",
-      "images" : [
-        {
-          "url" : "https://lh4.googleusercontent.com/-hdQ2HH5-hog/AAAAAAAAAAI/AAAAAAAAAAA/GW2OyU89jXE/W96-H96/photo.jpg"
-        }
-      ]
-    }
-  ]
+  // "attachments" : [
+  //   {
+  //     "title" : "Ask:",
+  //     "text" : "Who am I?",
+  //     "color" : "#666666",
+  //     "images" : [
+  //       {
+  //         "url" : "https://lh4.googleusercontent.com/-hdQ2HH5-hog/AAAAAAAAAAI/AAAAAAAAAAA/GW2OyU89jXE/W96-H96/photo.jpg"
+  //       }
+  //     ]
+  //   }
+  // ]
 };
 
 // TODO: save log
@@ -36,8 +36,17 @@ app.post('/chengyu', function(req, res) {
   var word = text.split(' ').slice(1).join('');
   console.log(word);
   request(apikey, word, function(data) {
-    console.log(JSON.stringify(data), data);
-    res.end(JSON.stringify(data));
+    const {
+      total, result, error_code, reason
+    } = data;
+    if (error_code !== 0) {
+      fakeMessage.text = reason;
+    } else {
+      fakeMessage.text = result.reduce(funtion(string, v, i) {
+        return string += v.name;
+      }, '');
+    }
+    res.end(JSON.stringify(fakeMessage));
   });
 })
 app.listen(port);

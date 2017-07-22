@@ -1,11 +1,8 @@
 var request = require('request');
 var winston = require('winston');
 
-var logToFile = require('./utils/logToFlie');
-logToFile(__dirname + '/debug.log');
-
 module.exports = function (key, word, cb) {
-  const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
+  // const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
 
   request.post({
     url: 'http://api.avatardata.cn/ChengYu/Search',

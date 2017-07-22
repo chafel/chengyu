@@ -5,9 +5,8 @@ var bodyparser = require('body-parser');
 app.use( bodyparser.json() );
 app.use(bodyparser.urlencoded({extended: false}));
 
-var logToFile = require('./utils/logToFlie');
+var logToFile = require('./utils/logToFile');
 logToFile(__dirname + '/debug.log');
-
 
 var request = require('./requestData');
 var isChineseWord = require('./utils/isChineseWord');

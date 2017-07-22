@@ -40,10 +40,10 @@ app.post('/chengyu', function(req, res) {
     fakeMessage.text = '请使用正确的格式：!chengyu+任意个数的汉字';
     res.end(JSON.stringify(fakeMessage));
   } else {
-    word = words.slice(1);
+    word = words.slice(1).join('');
     console.log(word);
-    var hasNonChineseWord = String(word).split('').find(!isChineseWord);
-    if (hasNonChineseWord) {
+    var findedChineseWord = word.split('').find(isChineseWord);
+    if (!findedChineseWord) {
       fakeMessage.text = '请使用正确的格式：`!chengyu+任意个数的汉字`';
       res.end(JSON.stringify(fakeMessage));
     }

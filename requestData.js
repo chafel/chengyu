@@ -12,8 +12,7 @@ module.exports = function (key, word, cb) {
     }
   }, function(error, response, body) {
     if (error) {
-      console.error(error.message);
-      winston.log(error.message);
+      console.log(error.message);
       // consume response data to free up memory
       response.resume();
       return;

@@ -5,12 +5,15 @@ var bodyparser = require('body-parser');
 app.use( bodyparser.json() );
 app.use(bodyparser.urlencoded({extended: false}));
 
-var winston = require('winston');
-winston.configure({
-  transports: [
-    new (winston.transports.File)({ filename: 'my.log' })
-  ]
-});
+var fs = require('fs');
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
+
+console.log = function(d) { //
+  log_file.write(new Date() + ' :\n' + util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
 
 var request = require('./requestData');
 var isChineseWord = require('./utils/isChineseWord');
@@ -49,7 +52,7 @@ app.post('/chengyu', function(req, res) {
     return;
   } else {
     word = words.slice(1).join('');
-    winston.log(word);
+    console.log(word);
     var findedChineseWord = word.split('').find(isChineseWord);
     if (!findedChineseWord) {
       fakeMessage.text = '请使用正确的格式：`!chengyu+任意个数的汉字`';
@@ -64,7 +67,7 @@ app.post('/chengyu', function(req, res) {
     const {
       total, result, error_code, reason
     } = JSON.parse(data);
-    winston.log(total, error_code, reason);
+    console.log(total, error_code, reason);
     if (error_code !== 0) {
       fakeMessage.text = reason;
     } else {

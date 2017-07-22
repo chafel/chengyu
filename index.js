@@ -34,9 +34,11 @@ var fakeMessage = {
 // TODO: save log
 app.post('/chengyu', function(req, res) {
   const { token, text, trigger_word, user_name } = req.body;
-  if (token !== '8d37093bb3548d9be7d876147d288337') {
+  if (token !== '8d37093bb3548d9be7d876147d288337' &&
+       token !== '0c2fbfe9a2f216e9ed223cc244678580') {
     res.status(404)        // HTTP status 404: NotFound
       .end('Not found');
+    return;
   }
   var words = text.split(' ');
   var word;

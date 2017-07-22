@@ -3,7 +3,7 @@ var request = require('request');
 module.exports = function (key, word, cb) {
   const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
 
-  request.get(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`)
+  request.POST(`http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`)
     .on('response', function (response) {
       console.log(response.statusCode);
       console.log(response.headers['content-type'])
@@ -12,7 +12,7 @@ module.exports = function (key, word, cb) {
 
       let error;
       if (response.statusCode !== 200) {
-        error = new Error('Request Failed.\n' + `Status Code: ${statusCode}`);
+        error = new Error('Request Failed.\n' + `Status Code: ${response.statusCode}`);
       }
       if (error) {
         console.error(error.message);

@@ -38,7 +38,8 @@ app.post('/chengyu', function(req, res) {
   request(apikey, word, function(data) {
     const {
       total, result, error_code, reason
-    } = data;
+    } = JSON.parse(data);
+    console.log(total, error_code, reason);
     if (error_code !== 0) {
       fakeMessage.text = reason;
     } else {

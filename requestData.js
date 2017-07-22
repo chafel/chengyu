@@ -3,10 +3,13 @@ var request = require('request');
 module.exports = function (key, word, cb) {
   const dataUrl = `http://api.avatardata.cn/ChengYu/Search?key=${key}&keyWord=${word}`;
 
-  request.post('http://api.avatardata.cn/ChengYu/Search'.form({
-    key,
-    keyWord: word
-  }), function(error, response, body) {
+  request.post({
+    url: 'http://api.avatardata.cn/ChengYu/Search',
+    form: {
+      key,
+      keyWord: word
+    }},
+  function(error, response, body) {
     if (error) {
       console.error(error.message);
       // consume response data to free up memory
